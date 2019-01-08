@@ -1,4 +1,7 @@
 #!/bin/bash
+interactive=$(expr "$- == *i*")
+
+
 
 ##############
 # BW DEV ENV
@@ -39,7 +42,7 @@ fi
 #######################################################
 
 # Disable the bell
-bind "set bell-style visible"
+if [[ $interactive > 0 ]]; then bind "set bell-style visible"; fi
 
 # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
 shopt -s checkwinsize
@@ -53,10 +56,12 @@ stty -ixon
 
 # Ignore case on auto-completion
 # Note: bind used instead of sticking these in .inputrc
-bind "set completion-ignore-case on"
+if [[ $interactive > 0 ]]; then bind "set completion-ignore-case on"; fi
+
 
 # Show auto-completion list automatically, without double tab
-bind "set show-all-if-ambiguous On"
+if [[ $interactive > 0 ]]; then bind "set show-all-if-ambiguous On"; fi
+
 
 # Set the default editor
 export EDITOR=vim
