@@ -1,6 +1,25 @@
 #!/bin/bash
-interactive=$(expr "$- == *i*")
 
+###################################
+# INTERACTIVE SHELL INITIALIZATION
+###################################
+if [ -t 1 ]; then
+	# standard output is a tty
+	# do interactive initialization
+
+	# Disable the bell
+	bind "set bell-style visible"
+
+	# Ignore case on auto-completion
+	# Note: bind used instead of sticking these in .inputrc
+	bind "set completion-ignore-case on"
+
+	# Show auto-completion list automatically, without double tab
+	bind "set show-all-if-ambiguous On"
+
+	# Allow ctrl-S for history navigation (with ctrl-R)
+	stty -ixon
+fi
 
 
 ##############
@@ -41,27 +60,12 @@ fi
 # EXPORTS
 #######################################################
 
-# Disable the bell
-if [[ $interactive > 0 ]]; then bind "set bell-style visible"; fi
-
 # Check the window size after each command and, if necessary, update the values of LINES and COLUMNS
 shopt -s checkwinsize
 
 # Causes bash to append to history instead of overwriting it so if you start a new terminal, you have old session history
 shopt -s histappend
 PROMPT_COMMAND='history -a'
-
-# Allow ctrl-S for history navigation (with ctrl-R)
-stty -ixon
-
-# Ignore case on auto-completion
-# Note: bind used instead of sticking these in .inputrc
-if [[ $interactive > 0 ]]; then bind "set completion-ignore-case on"; fi
-
-
-# Show auto-completion list automatically, without double tab
-if [[ $interactive > 0 ]]; then bind "set show-all-if-ambiguous On"; fi
-
 
 # Set the default editor
 export EDITOR=vim
@@ -106,12 +110,29 @@ alias web='cd /var/www/html'
 # To temporarily bypass an alias, we preceed the command with a \
 # EG: the ls command is aliased, but to use the normal ls command you would type \ls
 
+# Edit and reload this file
+alias ebrc="vim ~/.bashrc && source ~/.bashrc"
+
+
+# Git shortcuts
 alias s="git status"
 alias guca="git commit -a --amend --reset-author"
 alias grbm="git rebase -i origin/master"
 alias gfa="git fetch -a"
 alias gr="git review -R -u"
-alias l="cd ~/projects/lightspeed"
+alias gac="git commit -a"
+
+# Change directory aliases
+alias cdl="cd ~/projects/lightspeed"
+alias cdp="cd ~/projects"
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# cd into the old directory
+alias bd='cd "$OLDPWD"'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -136,16 +157,6 @@ alias vi='vim'
 alias svim='sudo vi'
 alias vis='vim "+set si"'
 
-# Change directory aliases
-alias home='cd ~'
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-
-# cd into the old directory
-alias bd='cd "$OLDPWD"'
 
 # Remove a directory and all files
 alias rmd='/bin/rm  --recursive --force --verbose '
@@ -178,7 +189,6 @@ alias 777='chmod -R 777'
 alias h="history | grep "
 
 # Search running processes
-alias p="ps aux | grep "
 alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
 
 # Search files in the current folder
