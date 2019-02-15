@@ -15,7 +15,7 @@ if [ -t 1 ]; then
 	bind "set completion-ignore-case on"
 
 	# Show auto-completion list automatically, without double tab
-	bind "set show-all-if-ambiguous On"
+	#bind "set show-all-if-ambiguous On"
 
 	# Allow ctrl-S for history navigation (with ctrl-R)
 	stty -ixon
