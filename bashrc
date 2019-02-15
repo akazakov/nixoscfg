@@ -1,4 +1,5 @@
 #!/bin/bash
+PATH=$PATH:~/bin
 
 ###################################
 # INTERACTIVE SHELL INITIALIZATION
@@ -6,6 +7,10 @@
 if [ -t 1 ]; then
 	# standard output is a tty
 	# do interactive initialization
+
+  # for all things add this to # .inputrc: set editing-mode vi
+  set -o vi
+
 
 	# Disable the bell
 	bind "set bell-style visible"
@@ -116,7 +121,8 @@ alias ebrc="vim ~/.bashrc && source ~/.bashrc"
 
 # Git shortcuts
 alias s="git status"
-alias guca="git commit -a --amend --reset-author"
+alias guca="git commit -a --amend --reset-author --no-edit"
+alias nixit="git commit -a -m 'WIP: nixing' && git push -f nixer"
 alias grbm="git rebase -i origin/master"
 alias gfa="git fetch -a"
 alias gr="git review -R -u"
