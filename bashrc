@@ -1,4 +1,5 @@
 #!/bin/bash
+PATH=$PATH:~/bin
 
 ###################################
 # INTERACTIVE SHELL INITIALIZATION
@@ -6,6 +7,10 @@
 if [ -t 1 ]; then
 	# standard output is a tty
 	# do interactive initialization
+
+  # for all things add this to # .inputrc: set editing-mode vi
+  set -o vi
+
 
 	# Disable the bell
 	bind "set bell-style visible"
@@ -116,7 +121,8 @@ alias ebrc="vim ~/.bashrc && source ~/.bashrc"
 
 # Git shortcuts
 alias s="git status"
-alias guca="git commit -a --amend --reset-author"
+alias guca="git commit -a --amend --reset-author --no-edit"
+alias nixit="git commit -a -m 'WIP: nixing' && git push -f nixer"
 alias grbm="git rebase -i origin/master"
 alias gfa="git fetch -a"
 alias gr="git review -R -u"
@@ -180,6 +186,7 @@ alias ldir="ls -l | egrep '^d'" # directories only
 # alias chmod commands
 alias mx='chmod a+x'
 alias 000='chmod -R 000'
+alias 600='chmod -R 600'
 alias 644='chmod -R 644'
 alias 666='chmod -R 666'
 alias 755='chmod -R 755'
@@ -357,6 +364,10 @@ trim()
 	echo -n "$var"
 }
 
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
 #######################################################
 # Set the ultimate amazing command prompt
 #######################################################
@@ -428,8 +439,8 @@ function __setprompt
 	fi
 
 	# Date
-	PS1+="\[${DARKGRAY}\](\[${CYAN}\]\$(date +%a) $(date +%b-'%-m')" # Date
-	PS1+="${BLUE} $(date +'%-I':%M:%S%P)\[${DARKGRAY}\])-" # Time
+	#PS1+="\[${DARKGRAY}\]\[${CYAN}\]\$(date +%a) $(date +%b-'%-m')" # Date
+	PS1+="${BLUE} $(date +'%-I':%M:%S%P)\[${DARKGRAY}\] " # Time
 
 	# CPU
 	#PS1+="(\[${MAGENTA}\]CPU $(cpu)%"
@@ -440,25 +451,26 @@ function __setprompt
 	# Network Connections (for a server - comment out for non-server)
 	#PS1+="\[${DARKGRAY}\]:\[${MAGENTA}\]Net $(awk 'END {print NR}' /proc/net/tcp)"
 
-	PS1+="\[${DARKGRAY}\])-"
+	PS1+="\[${DARKGRAY}\] "
 
 	# User and server
 	local SSH_IP=`echo $SSH_CLIENT | awk '{ print $1 }'`
 	local SSH2_IP=`echo $SSH2_CLIENT | awk '{ print $1 }'`
 	if [ $SSH2_IP ] || [ $SSH_IP ] ; then
-		PS1+="(\[${RED}\]\u@\h"
+		PS1+="\[${RED}\]\u@\h"
 	else
-		PS1+="(\[${RED}\]\u"
+		PS1+="\[${RED}\]\u"
 	fi
 
 	# Current directory
-	PS1+="\[${DARKGRAY}\]:\[${YELLOW}\]\w\[${DARKGRAY}\])-"
+	PS1+="\[${DARKGRAY}\]:\[${YELLOW}\]\w\[${DARKGRAY}\] "
 
 	# Total size of files in current directory
-	PS1+="(\[${GREEN}\]$(ls -lahf | grep -m 1 total | sed 's/total //')\[${DARKGRAY}\]:"
+	#PS1+="(\[${GREEN}\]$(ls -lahf | grep -m 1 total | sed 's/total //')\[${DARKGRAY}\]:"
 
 	# Number of files
-	PS1+="\[${GREEN}\]\$(ls -fA -1 | wc -l)\[${DARKGRAY}\])"
+	#PS1+="\[${GREEN}\]\$(ls -fA -1 | wc -l)\[${DARKGRAY}\])"
+  PS1+="\[${DARKGREY}\]\$(parse_git_branch)\[\033[00m\] "
 
 	# Skip to the next line
 	PS1+="\n"
