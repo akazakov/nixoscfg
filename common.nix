@@ -24,6 +24,9 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+     keyutils # keyrings
+     lshw
+     linuxPackages.perf
      # communication
      libreoffice
      mdp
@@ -31,6 +34,8 @@
      notmuch
      thunderbird
      zoom-us
+     gnucash
+     openscad
 
      # networking
      avahi
@@ -43,15 +48,18 @@
      # thinkfan
      lm_sensors
 
+
+     sqlite
      bc
      procps
+     psmisc
      coreutils
      nettools
      calibre
      chromium
+     firefox
      easyrsa
      file
-     firefox
      firejail
      gnupg
      go
@@ -71,6 +79,7 @@
      tree
      usbutils
      vim
+     neovim
      virtmanager
      wget
      yubico-piv-tool
@@ -114,6 +123,9 @@
      ctags
      wireshark
      zookeeper
+
+     # remoting
+     tigervnc
    ];
   #nixpkgs.config.hardware.u2f.enable = true;
   programs.zsh.enable = true;
