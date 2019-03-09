@@ -7,15 +7,15 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./containers.nix
-      ./vim.nix
-      ./dev.nix
-    ];
+    ./containers.nix
+    ./vim.nix
+    ./dev.nix
+  ];
 
   nix = {
-	  useSandbox = true;
-	  maxJobs = 16;
-	  buildCores = 16;
+    useSandbox = true;
+    maxJobs = 16;
+    buildCores = 16;
   };
 
   time.timeZone = "US/Eastern";
@@ -24,148 +24,125 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-     keyutils # keyrings
-     lshw
-     linuxPackages.perf
-     # communication
-     libreoffice
-     mdp
-     hexchat
-     notmuch
-     thunderbird
-     zoom-us
-     gnucash
-     openscad
-
-     # networking
-     avahi
-     dnsutils
-     mosh
-     networkmanager-openvpn
-     networkmanagerapplet
-
-     # HW
-     # thinkfan
-     lm_sensors
-
-
-     sqlite
-     bc
-     procps
-     psmisc
-     coreutils
-     nettools
-     calibre
-     chromium
-     firefox
-     easyrsa
-     file
-     firejail
-     gnupg
-     go
-     google-chrome
-     indent
-     keepassxc
-     libvirt
-     lm_sensors
-     manpages
-     nmap
-     openvpn
-     pacman
-     pidgin
-     posix_man_pages
-     ripgrep
-     stdmanpages
-     tree
-     usbutils
-     vim
-     neovim
-     virtmanager
-     wget
-     yubico-piv-tool
-     yubikey-personalization-gui
-     openssl
-     ripgrep
-     pants
-     manpages
-     psmisc
-     apg 		# Password gen
-     bind		# nslookup, dig
-     binutils	# strgings etc
-     chromium
-     git
-     git-review
-     idea.idea-community
-     maven
-     openjdk10
-     python
-     ruby
-     sbt
-     scala_2_11
-     screen
-     tcpdump
-     tigervnc
-     unzip
-     vim
-     wget
-     xmove
-     tree
-     cifs-utils
-     file
-     keyutils
-     mono54
-     krb5Full.dev
-     protobuf3_1
-     lsof
-     gnumake
-     cmake
-     gcc
-     ctags
-     wireshark
-     zookeeper
-
-     # remoting
-     tigervnc
-   ];
-  #nixpkgs.config.hardware.u2f.enable = true;
+    apg
+    avahi
+    bc
+    bind   # nslookup, dig
+    binutils # strgings etc
+    calibre
+    chromium
+    chromium
+    cifs-utils
+    cmake
+    coreutils
+    ctags
+    dnsutils
+    easyrsa
+    file
+    file
+    firefox
+    firejail
+    gcc
+    git
+    git-review
+    gnucash
+    gnumake
+    gnupg
+    go
+    google-chrome
+    hexchat
+    idea.idea-community
+    indent
+    keepassxc
+    keyutils
+    keyutils # keyrings
+    krb5Full.dev
+    libreoffice
+    libvirt
+    linuxPackages.perf
+    lm_sensors
+    lm_sensors
+    lshw
+    lsof
+    manpages
+    manpages
+    maven
+    mdp
+    mono54
+    mosh
+    neovim
+    nettools
+    networkmanager-openvpn
+    networkmanagerapplet
+    nmap
+    notmuch
+    openjdk10
+    openscad
+    openssl
+    openvpn
+    pacman
+    pants
+    pidgin
+    posix_man_pages
+    procps
+    protobuf3_1
+    psmisc
+    psmisc
+    python
+    ripgrep
+    ripgrep
+    ruby
+    sbt
+    scala_2_11
+    screen
+    sqlite
+    stdmanpages
+    tcpdump
+    thunderbird
+    tigervnc
+    tigervnc
+    tree
+    tree
+    unzip
+    usbutils
+    vim
+    vim
+    virtmanager
+    wget
+    wget
+    wireshark
+    xmove
+    yubico-piv-tool
+    yubikey-personalization-gui
+    zookeeper
+    zoom-us
+  ];
   programs.zsh.enable = true;
   programs.java.enable = true;
 
   services.avahi.enable = true;
   services.udev.packages = [ pkgs.libu2f-host ];
   services.xserver.xkbOptions = "ctrl:nocaps";
-  #services.ntp.enable = true;
   virtualisation.libvirtd.enable = true;
   networking.firewall.checkReversePath = false;
   virtualisation.virtualbox.host.enable = true;
   virtualisation.virtualbox.guest.enable =  true;
 
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
 
-  # Enable the KDE Desktop Environment.
-  # services.xserver.displayManager.kdm.enable = true;
-  # services.xserver.desktopManager.kde4.enable = true;
   services.xserver.desktopManager.gnome3.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.tyoma = {
-     isNormalUser = true;
-     uid = 1000;
-     extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" ];
-     createHome = true;
+    isNormalUser = true;
+    uid = 1000;
+    extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" ];
+    createHome = true;
   };
 
   security.sudo.wheelNeedsPassword = false;
