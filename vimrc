@@ -97,7 +97,7 @@ set completeopt=menu
 "let g:solarized_termcolors = 256
 "let g:solarized_termtrans = 1
 
-set background=dark
+set background=light
 set backspace=2 " make backspace work like most other programs
 colorscheme solarized
 let g:vim_markdown_new_list_item_indent = 0
