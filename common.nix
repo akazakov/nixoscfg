@@ -1,9 +1,21 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+  zinc = pkgs.fetchzip {
+    url = "http://downloads.typesafe.com/zinc/0.3.0/zinc-0.3.0.tgz";
+    sha256 = "0pax5zim126yqsjwv881iarw7jybsqcsg0jz4px6rgixsp05bxyf";
+  };
 
+  myst = pkgs.st.override {
+    patches = [
+     # (pkgs.fetchpatch {
+     #   name = "solr.patch";
+     #   url = "https://st.suckless.org/patches/solarized/st-solarized-both-0.8.1.diff";
+     #   sha256 = "1hsyfp3fjrh28rl0jm7k1p1kvgpy6b9w79hjz546labwfxv3p3br";
+     # })
+    ];
+  };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -17,6 +29,7 @@
     maxJobs = 16;
     buildCores = 16;
   };
+  nixpkgs.config.allowBroken = true;
 
   time.timeZone = "US/Eastern";
 
@@ -31,20 +44,21 @@
     binutils # strgings etc
     calibre
     chromium
-    chromium
     cifs-utils
     cmake
     coreutils
     ctags
     dnsutils
+    dwm
+    dmenu
     easyrsa
-    file
     file
     firefox
     firejail
     gcc
     git
     git-review
+    gnome3.gnome-session
     gnucash
     gnumake
     gnupg
@@ -61,14 +75,12 @@
     libvirt
     linuxPackages.perf
     lm_sensors
-    lm_sensors
     lshw
     lsof
     manpages
-    manpages
     maven
     mdp
-    mono54
+    mono
     mosh
     neovim
     nettools
@@ -76,7 +88,7 @@
     networkmanagerapplet
     nmap
     notmuch
-    openjdk10
+    openjdk
     openscad
     openssl
     openvpn
@@ -87,33 +99,29 @@
     procps
     protobuf3_1
     psmisc
-    psmisc
     python
-    ripgrep
     ripgrep
     ruby
     sbt
     scala_2_11
     screen
     sqlite
+    myst
     stdmanpages
     tcpdump
     thunderbird
     tigervnc
-    tigervnc
-    tree
     tree
     unzip
     usbutils
     vim
-    vim
     virtmanager
     wget
-    wget
     wireshark
-    xmove
+    wmname
     yubico-piv-tool
     yubikey-personalization-gui
+    zinc
     zookeeper
     zoom-us
   ];
@@ -141,7 +149,7 @@
   users.extraUsers.tyoma = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" ];
+    extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" "wireshark" ];
     createHome = true;
   };
 
