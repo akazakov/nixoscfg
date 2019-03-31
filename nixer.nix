@@ -2,18 +2,18 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, options, lib, ... }:
+{ config, pkgs, options, lib,  ... }:
 
 let cfg = {
-  defaultRealm = "KERB.IAMUAT.BWCE.IO";
-  domainRealm = "kerb.iamuat.bwce.io";
-  kerberosAdminServer = "kerb.iamuat.bwce.io";
-  kdc = "kerb.iamuat.bwce.io";
+#  defaultRealm = "KERB.IAMUAT.BWCE.IO";
+#  domainRealm = "kerb.iamuat.bwce.io";
+#  kerberosAdminServer = "kerb.iamuat.bwce.io";
+#  kdc = "kerb.iamuat.bwce.io";
 
-# defaultRealm = "CHURROS.LSDEV.FIERYLAB.COM";
-# domainRealm = "churros.lsdev.fierylab.com";
-# kerberosAdminServer = "churros.lsdev.fierylab.com";
-# kdc = "churros.lsdev.fierylab.com";
+ defaultRealm = "CHURROS.LSDEV.FIERYLAB.COM";
+ domainRealm = "churros.lsdev.fierylab.com";
+ kerberosAdminServer = "churros.lsdev.fierylab.com";
+ kdc = "churros.lsdev.fierylab.com";
 };
 
 
@@ -81,7 +81,7 @@ in
       "10.100.15.144" = [ "win-i6mrs9b5lau.kerb.iamuat.bwce.io" "WIN-I6MRS9B5LAU" ];
       "10.100.15.124" = ["sso.iamuat.bwce.io"];
       "172.28.15.226" = ["ak-kerberos-test"];
-      "172.28.15.89" = ["HYDRAETLMSSQL.kerb.iamuat.bwce.io" "HYDRAETLMSSQL"];
+      #"172.28.15.89" = ["HYDRAETLMSSQL.kerb.iamuat.bwce.io" "HYDRAETLMSSQL"];
       "172.28.9.89" = [  "webserver.hydra.local.me.dev.ls.lsdev.fierylab.com"];
       "127.0.0.1" = [ "nixer" ];
     };
@@ -93,7 +93,15 @@ in
       logRefusedUnicastsOnly = true;
       checkReversePath = false;
     };
-    nameservers = [ "172.28.8.43" "172.28.15.72" "172.28.8.2"];
+
+    nameservers = [
+      #"10.100.15.184"
+      #"10.100.15.83"
+      "172.28.8.43"
+      "172.28.15.72"
+      "172.28.8.2"
+    ];
+
     nat = {
       enable = true; # nat for the container
       internalInterfaces = ["ve-kolobok" "ve-hydra"];
@@ -119,6 +127,7 @@ in
     "mount.cifs".source = "${pkgs.cifs-utils.out}/bin/mount.cifs";
   };
   sound.enable = lib.mkForce false;
+  services.udisks2.enable = lib.mkForce false;
 
   krb5 = {
     enable = true;
