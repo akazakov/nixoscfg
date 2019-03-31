@@ -66,9 +66,8 @@
     lsof
     manpages
     manpages
-    maven
     mdp
-    mono54
+    mono
     mosh
     neovim
     nettools
@@ -76,12 +75,10 @@
     networkmanagerapplet
     nmap
     notmuch
-    openjdk10
     openscad
     openssl
     openvpn
     pacman
-    pants
     pidgin
     posix_man_pages
     procps
@@ -111,7 +108,6 @@
     wget
     wget
     wireshark
-    xmove
     yubico-piv-tool
     yubikey-personalization-gui
     zookeeper
@@ -127,6 +123,7 @@
   networking.firewall.checkReversePath = false;
   virtualisation.virtualbox.host.enable = true;
   virtualisation.virtualbox.guest.enable =  true;
+  virtualisation.docker.enable =  true;
 
   services.openssh.enable = true;
 
@@ -141,9 +138,10 @@
   users.extraUsers.tyoma = {
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" ];
+    extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" "docker"];
     createHome = true;
   };
 
   security.sudo.wheelNeedsPassword = false;
+  programs.bash.interactiveShellInit = builtins.readFile ./bashrc;
 }

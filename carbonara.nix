@@ -7,9 +7,13 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./common.nix
-    ];
+    ./hardware-configuration.nix
+    ./common.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    thinkfan
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
