@@ -112,6 +112,7 @@ in
     thunderbird
     tigervnc
     tree
+    terraform
     unzip
     usbutils
     vim
@@ -146,11 +147,25 @@ in
   services.xserver.desktopManager.plasma5.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.extraUsers.tyoma = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" "wireshark" ];
-    createHome = true;
+  users = {
+    extraUsers.tyoma = {
+        isNormalUser = true;
+        uid = 1000;
+        extraGroups = [ "vboxusers" "libvirtd" "wheel" "disk" "audio" "video" "networkmanager" "systemd-journal" "wireshark" ];
+        createHome = true;
+    };
+    extraGroups.wireshark = {};
+  };
+
+  security.wrappers = {
+    "dumpcap" = {
+      source = "${pkgs.wireshark.out}/bin/dumpcap";
+      group = "wireshark";
+      owner = "root";
+      setuid = false;
+      setgid = false;
+      capabilities = "cap_net_raw,cap_net_admin+eip";
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
