@@ -6,6 +6,7 @@
       binutils
       clojure
       gcc
+      gdb
       gnumake
       idea.clion
       idea.idea-community

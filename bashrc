@@ -476,9 +476,9 @@ function __setprompt
 	PS1+="\n"
 
 	if [[ $EUID -ne 0 ]]; then
-		PS1+="\[${GREEN}\]>\[${NOCOLOR}\] " # Normal user
+		PS1+="\[${GREEN}\]$\[${NOCOLOR}\] " # Normal user
 	else
-		PS1+="\[${RED}\]>\[${NOCOLOR}\] " # Root user
+		PS1+="\[${RED}\]#\[${NOCOLOR}\] " # Root user
 	fi
 
 	# PS2 is used to continue a command using the \ character

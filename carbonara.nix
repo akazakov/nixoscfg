@@ -14,6 +14,7 @@
   environment.systemPackages = with pkgs; [
     thinkfan
   ];
+  hardware.opengl.driSupport32Bit = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
