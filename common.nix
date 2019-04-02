@@ -109,6 +109,7 @@ in
     thunderbird
     tigervnc
     tree
+    terraform
     unzip
     usbutils
     vim
@@ -160,6 +161,16 @@ in
       "wireshark"
     ];
     createHome = true;
+
+  security.wrappers = {
+    "dumpcap" = {
+      source = "${pkgs.wireshark.out}/bin/dumpcap";
+      group = "wireshark";
+      owner = "root";
+      setuid = false;
+      setgid = false;
+      capabilities = "cap_net_raw,cap_net_admin+eip";
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;

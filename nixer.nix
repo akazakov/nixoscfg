@@ -5,10 +5,15 @@
 { config, pkgs, options, lib,  ... }:
 
 let cfg = {
-#  defaultRealm = "KERB.IAMUAT.BWCE.IO";
-#  domainRealm = "kerb.iamuat.bwce.io";
-#  kerberosAdminServer = "kerb.iamuat.bwce.io";
-#  kdc = "kerb.iamuat.bwce.io";
+  #defaultRealm = "KERB.IAMUAT.BWCE.IO";
+  #domainRealm = "kerb.iamuat.bwce.io";
+  #kerberosAdminServer = "kerb.iamuat.bwce.io";
+  #kdc = "kerb.iamuat.bwce.io";
+
+#  defaultRealm = "EC2.INTERNAL";
+#  domainRealm = "ec2.internal";
+#  kerberosAdminServer = "ip-172-28-15-33.ec2.internal:749";
+#  kdc = "ip-172-28-15-33.ec2.internal:88";
 
  defaultRealm = "CHURROS.LSDEV.FIERYLAB.COM";
  domainRealm = "churros.lsdev.fierylab.com";
@@ -84,11 +89,12 @@ in
       #"172.28.15.89" = ["HYDRAETLMSSQL.kerb.iamuat.bwce.io" "HYDRAETLMSSQL"];
       "172.28.9.89" = [  "webserver.hydra.local.me.dev.ls.lsdev.fierylab.com"];
       "127.0.0.1" = [ "nixer" ];
+      "172.28.9.84" = ["EC2AMAZ-3NSFR0O"];
     };
     extraHosts = "";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 5901 5902 12345 9001 5005];
+      allowedTCPPorts = [ 22 5901 5902 12345 9001 5005 8080];
       logRefusedConnections = true;
       logRefusedUnicastsOnly = true;
       checkReversePath = false;
@@ -97,9 +103,9 @@ in
     nameservers = [
       #"10.100.15.184"
       #"10.100.15.83"
+      "172.28.8.2"
       "172.28.8.43"
       "172.28.15.72"
-      "172.28.8.2"
     ];
 
     nat = {
@@ -123,9 +129,6 @@ in
   };
 
   #systemd.package = mysystemd;
-  security.wrappers = {
-    "mount.cifs".source = "${pkgs.cifs-utils.out}/bin/mount.cifs";
-  };
   sound.enable = lib.mkForce false;
   services.udisks2.enable = lib.mkForce false;
 
