@@ -2,19 +2,23 @@
 
 {
   environment.systemPackages = with pkgs; [
+      bazel
       binutils
       clojure
+      gcc
+      gdb
+      gnumake
       idea.clion
       idea.idea-community
-      vscode
       jdk
+      jetty
       leiningen
+      llvm
+      maven
       mono
+      plantuml
       ruby
       scala
-      plantuml
-      gcc
-      gnumake
-      llvm
+      vscode
   ];
 }
