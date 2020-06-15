@@ -491,3 +491,4 @@ function __setprompt
 	PS4='\[${DARKGRAY}\]+\[${NOCOLOR}\] '
 }
 PROMPT_COMMAND="$PROMPT_COMMAND; __setprompt"
+alias ctags='/usr/local/bin/ctags'

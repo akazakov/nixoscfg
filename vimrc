@@ -1,3 +1,23 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-sensible'
+Plugin 'vimwiki/vimwiki'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'michal-h21/vim-zettel'
+Plugin 'altercation/vim-colors-solarized'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 " UI {{{
 set directory=$HOME/.vim_swap/
 " Allow editing multiple buffers wihtout saving
@@ -99,5 +119,31 @@ set completeopt=menu
 
 set background=light
 set backspace=2 " make backspace work like most other programs
+set termguicolors
 colorscheme solarized
-let g:vim_markdown_new_list_item_indent = 0
+
+set tags=tags
+
+
+" Settings for Vimwiki
+let g:vimwiki_list = [{'path':'~/scratchbox/vimwiki/markdown/','ext':'.md','syntax':'markdown'}, {"path":"~/scratchbox/vimwiki/wiki/"}]
+
+" Filename format. The filename is created using strftime() function
+let g:zettel_format = "%y%m%d-%H%M-%title"
+" command used for VimwikiSearch
+" default value is "ag". To use other command, like ripgrep, pass the
+" command line and options:
+let g:zettel_fzf_command = "rg --column --line-number --ignore-case --no-heading --color=always "
+" Disable default keymappings
+let g:zettel_default_mappings = 0
+" This is basically the same as the default configuration
+augroup filetype_vimwiki
+  autocmd!
+  autocmd FileType vimwiki imap <silent> [[ [[<esc><Plug>ZettelSearchMap
+  autocmd FileType vimwiki nmap T <Plug>ZettelYankNameMap
+  autocmd FileType vimwiki xmap z <Plug>ZettelNewSelectedMap
+  autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
+augroup END
+
+" Set template and custom header variable for the second Wiki
+let g:zettel_options = [{},{"front_matter" : {"tags" : ""}, "template" :  "~/.mytemplate.tpl"}]
